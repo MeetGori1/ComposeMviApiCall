@@ -14,6 +14,7 @@ import com.meet.composemviapicall.data.model.Meals
 @Composable
 fun SuccessComponent(
     data: List<Meals>,
+    modifier: Modifier = Modifier,
     onSearchClick: (String) -> Unit
 ) {
     Column() {
@@ -22,7 +23,7 @@ fun SuccessComponent(
             fontWeight = FontWeight(900),
             fontFamily = FontFamily.Cursive,
             fontSize = 24.sp,
-            modifier = Modifier.padding(15.dp)
+            modifier = modifier.padding(horizontal = 15.dp)
         )
         SearchComponent(onSearchClick = onSearchClick)
         ListMeals(data = data)

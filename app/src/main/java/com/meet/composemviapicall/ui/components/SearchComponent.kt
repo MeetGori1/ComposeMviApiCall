@@ -3,6 +3,8 @@ package com.meet.composemviapicall.ui.components
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -18,6 +20,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -29,7 +32,7 @@ fun SearchComponent(onSearchClick: (String) -> Unit, modifier: Modifier = Modifi
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 8.dp)
+            .padding(horizontal = 15.dp)
     ) {
         OutlinedTextField(
             value = query,
@@ -39,6 +42,17 @@ fun SearchComponent(onSearchClick: (String) -> Unit, modifier: Modifier = Modifi
                     errorMessage = ""
                 }
             },
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+            keyboardActions = KeyboardActions(
+                onSearch = {
+                    if (query.isEmpty()) {
+                        errorMessage = "Please enter a valid query"
+                    } else {
+                        errorMessage = ""
+                        onSearchClick(query)
+                    }
+                }
+            ),
             isError = errorMessage.isNotEmpty(),
             label = { Text("Search") },
             trailingIcon = {
@@ -62,11 +76,12 @@ fun SearchComponent(onSearchClick: (String) -> Unit, modifier: Modifier = Modifi
 
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp)
+                .padding(1.dp)
         )
 
         if (errorMessage.isNotBlank()) {
-            Text(text = errorMessage,
+            Text(
+                text = errorMessage,
                 color = MaterialTheme.colorScheme.error,
                 style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier.padding(start = 8.dp)

@@ -1,11 +1,10 @@
 package com.meet.composemviapicall.ui.screens
 
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.colorspace.WhitePoint
 import com.meet.composemviapicall.ui.components.ErrorComponent
 import com.meet.composemviapicall.ui.components.LoadingComponent
 import com.meet.composemviapicall.ui.components.SuccessComponent
@@ -14,22 +13,21 @@ import com.meet.composemviapicall.ui.viewmodel.RecipeState
 import com.meet.composemviapicall.ui.viewmodel.RecipeViewModel
 
 @Composable
-fun HomeScreen(receipeViewModel: RecipeViewModel, modifier: Modifier = Modifier) {
-    val state = receipeViewModel.state.collectAsState().value
-    when (state) {
-        is RecipeState.Loading -> LoadingComponent()
+fun HomeScreen(recipeViewModel: RecipeViewModel, modifier: Modifier = Modifier) {
+    when (val state = recipeViewModel.state.collectAsState().value) {
+        is RecipeState.Loading -> LoadingComponent(modifier)
 
         is RecipeState.Error -> {
-            ErrorComponent(message = state.message, onRetry = {
-                receipeViewModel.processIntent(Intents.GetRandomMeals)
+            ErrorComponent(message = state.message, modifier,onRetry = {
+                recipeViewModel.processIntent(Intents.GetRandomMeals)
             })
         }
 
         is RecipeState.Success -> {
             val recipeList = state.meals
-            SuccessComponent(recipeList, onSearchClick = {query->
+            SuccessComponent(recipeList,modifier=modifier ,onSearchClick = {query->
                 run {
-                    receipeViewModel.processIntent(
+                    recipeViewModel.processIntent(
                         Intents.GetSearchMeals(query)
                     )
                 }
@@ -38,6 +36,6 @@ fun HomeScreen(receipeViewModel: RecipeViewModel, modifier: Modifier = Modifier)
 
     }
     LaunchedEffect(key1 = true) {
-        receipeViewModel.processIntent(Intents.GetRandomMeals)
+        recipeViewModel.processIntent(Intents.GetRandomMeals)
     }
 }

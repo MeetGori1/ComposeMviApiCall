@@ -15,7 +15,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -29,6 +28,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -53,8 +53,9 @@ fun MealItem(item: Meals, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(8.dp),
+            .padding(15.dp),
         shape = MaterialTheme.shapes.medium,
+        colors = CardDefaults.cardColors(containerColor = Color.White),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
     ) {
         Column(
@@ -128,7 +129,7 @@ fun MealItem(item: Meals, modifier: Modifier = Modifier) {
                 Icon(
                     imageVector = if (expanded) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
                     contentDescription = "expand",
-                    modifier = modifier.align(Alignment.End)
+                    modifier = modifier.align(Alignment.CenterHorizontally)
                 )
             }
         }
@@ -139,21 +140,21 @@ fun MealItem(item: Meals, modifier: Modifier = Modifier) {
 fun getIngredients(meal: Meals): String {
     var ingredients = ""
     with(meal) {
-        if (strIngredient1.isNullOrEmpty().not()) ingredients += "$strIngredient1-$strMeasure1"
-        if (strIngredient2.isNullOrEmpty().not()) ingredients += "$strIngredient2-$strMeasure2"
-        if (strIngredient3.isNullOrEmpty().not()) ingredients += "$strIngredient3-$strMeasure3"
-        if (strIngredient4.isNullOrEmpty().not()) ingredients += "$strIngredient4-$strMeasure4"
-        if (strIngredient5.isNullOrEmpty().not()) ingredients += "$strIngredient5-$strMeasure5"
-        if (strIngredient6.isNullOrEmpty().not()) ingredients += "$strIngredient6-$strMeasure6"
-        if (strIngredient7.isNullOrEmpty().not()) ingredients += "$strIngredient7-$strMeasure7"
-        if (strIngredient8.isNullOrEmpty().not()) ingredients += "$strIngredient8-$strMeasure8"
-        if (strIngredient9.isNullOrEmpty().not()) ingredients += "$strIngredient9-$strMeasure9"
-        if (strIngredient10.isNullOrEmpty().not()) ingredients += "$strIngredient10-$strMeasure10"
-        if (strIngredient11.isNullOrEmpty().not()) ingredients += "$strIngredient11-$strMeasure11"
-        if (strIngredient12.isNullOrEmpty().not()) ingredients += "$strIngredient12-$strMeasure12"
-        if (strIngredient13.isNullOrEmpty().not()) ingredients += "$strIngredient13-$strMeasure13"
-        if (strIngredient14.isNullOrEmpty().not()) ingredients += "$strIngredient14-$strMeasure14"
-        if (strIngredient15.isNullOrEmpty().not()) ingredients += "$strIngredient15-$strMeasure15"
+        if (strIngredient1.isNullOrEmpty().not()) ingredients += "$strIngredient1 - $strMeasure1,"
+        if (strIngredient2.isNullOrEmpty().not()) ingredients += " $strIngredient2 - $strMeasure2,"
+        if (strIngredient3.isNullOrEmpty().not()) ingredients += " $strIngredient3 - $strMeasure3,"
+        if (strIngredient4.isNullOrEmpty().not()) ingredients += " $strIngredient4 - $strMeasure4,"
+        if (strIngredient5.isNullOrEmpty().not()) ingredients += " $strIngredient5 - $strMeasure5,"
+        if (strIngredient6.isNullOrEmpty().not()) ingredients += " $strIngredient6 - $strMeasure6,"
+        if (strIngredient7.isNullOrEmpty().not()) ingredients += " $strIngredient7 - $strMeasure7,"
+        if (strIngredient8.isNullOrEmpty().not()) ingredients += " $strIngredient8 - $strMeasure8,"
+        if (strIngredient9.isNullOrEmpty().not()) ingredients += " $strIngredient9 - $strMeasure9,"
+        if (strIngredient10.isNullOrEmpty().not()) ingredients += " $strIngredient10 - $strMeasure10,"
+        if (strIngredient11.isNullOrEmpty().not()) ingredients += " $strIngredient11 - $strMeasure11,"
+        if (strIngredient12.isNullOrEmpty().not()) ingredients += " $strIngredient12 - $strMeasure12,"
+        if (strIngredient13.isNullOrEmpty().not()) ingredients += " $strIngredient13 - $strMeasure13,"
+        if (strIngredient14.isNullOrEmpty().not()) ingredients += " $strIngredient14 - $strMeasure14,"
+        if (strIngredient15.isNullOrEmpty().not()) ingredients += " $strIngredient15 - $strMeasure15"
     }
     return ingredients.trimEnd('\n')
 }

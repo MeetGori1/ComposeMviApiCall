@@ -2,7 +2,7 @@ package com.meet.composemviapicall.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.meet.composemviapicall.data.network.ApiClient
+import com.meet.composemviapicall.data.network.repository.MealsRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -22,7 +22,7 @@ class RecipeViewModel : ViewModel() {
         viewModelScope.launch {
             _state.value = RecipeState.Loading
             try {
-                val meals = ApiClient.getRandomMeals()
+                val meals = MealsRepository.getRandomMeal()
                 _state.value = RecipeState.Success(meals)
             } catch (e: Exception) {
                 _state.value = RecipeState.Error(e.message.toString())
@@ -34,7 +34,7 @@ class RecipeViewModel : ViewModel() {
         viewModelScope.launch {
             _state.value = RecipeState.Loading
             try {
-                val meals = ApiClient.getMealsBySearch(query)
+                val meals = MealsRepository.getMealsBySearch(query)
                 _state.value = RecipeState.Success(meals)
             } catch (e: Exception) {
                 _state.value = RecipeState.Error(e.message.toString())

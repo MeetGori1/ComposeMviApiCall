@@ -72,6 +72,7 @@ dependencies {
     implementation(libs.ktor.client.cio.jvm)
     implementation(libs.ktor.client.content.negotiation)
     implementation(libs.ktor.serialization.kotlinx.json)
+    implementation(libs.ktor.client.logging)
     implementation(libs.gson)
     implementation(libs.coil.compose)
 }
