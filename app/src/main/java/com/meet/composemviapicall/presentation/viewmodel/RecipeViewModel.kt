@@ -1,8 +1,8 @@
-package com.meet.composemviapicall.ui.viewmodel
+package com.meet.composemviapicall.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.meet.composemviapicall.data.network.repository.MealsRepository
+import com.meet.composemviapicall.domain.repository.MealsRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

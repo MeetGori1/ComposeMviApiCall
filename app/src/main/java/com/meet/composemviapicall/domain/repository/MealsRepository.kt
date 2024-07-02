@@ -1,7 +1,7 @@
-package com.meet.composemviapicall.data.network.repository
+package com.meet.composemviapicall.domain.repository
 
 import com.meet.composemviapicall.data.model.Meals
-import com.meet.composemviapicall.data.network.api.ApiService
+import com.meet.composemviapicall.domain.api.ApiService
 
 object MealsRepository {
 

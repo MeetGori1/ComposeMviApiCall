@@ -1,4 +1,4 @@
-package com.meet.composemviapicall.data.network.api
+package com.meet.composemviapicall.domain.api
 
 object HttpRoutes {
     const val RANDOM_MEALS = "random.php"

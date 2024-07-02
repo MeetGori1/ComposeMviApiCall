@@ -1,4 +1,4 @@
-package com.meet.composemviapicall.data.network.client
+package com.meet.composemviapicall.domain.client
 
 import com.meet.composemviapicall.data.model.MealResponse
 import com.meet.composemviapicall.data.model.Meals

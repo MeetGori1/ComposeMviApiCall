@@ -1,4 +1,4 @@
-package com.meet.composemviapicall.ui.viewmodel
+package com.meet.composemviapicall.presentation.viewmodel
 
 import com.meet.composemviapicall.data.model.Meals
 

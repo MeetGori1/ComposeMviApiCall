@@ -1,16 +1,16 @@
-package com.meet.composemviapicall.ui.screens
+package com.meet.composemviapicall.presentation.screens
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import com.meet.composemviapicall.ui.components.ErrorComponent
-import com.meet.composemviapicall.ui.components.LoadingComponent
-import com.meet.composemviapicall.ui.components.SuccessComponent
-import com.meet.composemviapicall.ui.viewmodel.Intents
-import com.meet.composemviapicall.ui.viewmodel.RecipeState
-import com.meet.composemviapicall.ui.viewmodel.RecipeViewModel
+import com.meet.composemviapicall.presentation.components.ErrorComponent
+import com.meet.composemviapicall.presentation.components.LoadingComponent
+import com.meet.composemviapicall.presentation.components.SuccessComponent
+import com.meet.composemviapicall.presentation.viewmodel.Intents
+import com.meet.composemviapicall.presentation.viewmodel.RecipeState
+import com.meet.composemviapicall.presentation.viewmodel.RecipeViewModel
 
 @Composable
 fun HomeScreen(recipeViewModel: RecipeViewModel, modifier: Modifier = Modifier) {

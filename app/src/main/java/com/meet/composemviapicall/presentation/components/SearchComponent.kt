@@ -1,4 +1,4 @@
-package com.meet.composemviapicall.ui.components
+package com.meet.composemviapicall.presentation.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth

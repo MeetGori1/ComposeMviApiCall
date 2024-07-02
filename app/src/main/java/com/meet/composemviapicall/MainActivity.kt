@@ -9,9 +9,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
-import com.meet.composemviapicall.ui.screens.HomeScreen
+import com.meet.composemviapicall.presentation.screens.HomeScreen
 import com.meet.composemviapicall.ui.theme.ComposeMviApiCallTheme
-import com.meet.composemviapicall.ui.viewmodel.RecipeViewModel
+import com.meet.composemviapicall.presentation.viewmodel.RecipeViewModel
 
 class MainActivity : ComponentActivity() {
     private val viewModel: RecipeViewModel by viewModels()

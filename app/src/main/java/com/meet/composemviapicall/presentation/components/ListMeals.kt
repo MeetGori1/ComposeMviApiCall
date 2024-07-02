@@ -1,4 +1,4 @@
-package com.meet.composemviapicall.ui.components
+package com.meet.composemviapicall.presentation.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
