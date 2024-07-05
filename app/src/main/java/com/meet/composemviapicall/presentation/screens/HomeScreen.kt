@@ -27,9 +27,9 @@ fun HomeScreen(recipeViewModel: RecipeViewModel, modifier: Modifier = Modifier) 
             val recipeList = state.meals
             SuccessComponent(recipeList,modifier=modifier ,onSearchClick = {query->
                 run {
-                    recipeViewModel.processIntent(
-                        Intents.GetSearchMeals(query)
-                    )
+                 /*   recipeViewModel.processIntent(
+                        Intents.GetSearchMeals()
+                    )*/
                 }
             })
         }

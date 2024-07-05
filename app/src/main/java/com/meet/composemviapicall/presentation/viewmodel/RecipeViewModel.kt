@@ -13,28 +13,17 @@ class RecipeViewModel : ViewModel() {
 
     fun processIntent(intent: Intents) {
         when (intent) {
-            is Intents.GetRandomMeals -> getRandomMeals()
-            is Intents.GetSearchMeals -> getSearchMeals(intent.query)
+            is Intents.GetRandomMeals -> getSearchMeals()
         }
     }
 
-    private fun getRandomMeals() {
-        viewModelScope.launch {
-            _state.value = RecipeState.Loading
-            try {
-                val meals = MealsRepository.getRandomMeal()
-                _state.value = RecipeState.Success(meals)
-            } catch (e: Exception) {
-                _state.value = RecipeState.Error(e.message.toString())
-            }
-        }
-    }
 
-    private fun getSearchMeals(query: String) {
+
+    private fun getSearchMeals() {
         viewModelScope.launch {
             _state.value = RecipeState.Loading
             try {
-                val meals = MealsRepository.getMealsBySearch(query)
+                val meals = MealsRepository.getPhotos()
                 _state.value = RecipeState.Success(meals)
             } catch (e: Exception) {
                 _state.value = RecipeState.Error(e.message.toString())

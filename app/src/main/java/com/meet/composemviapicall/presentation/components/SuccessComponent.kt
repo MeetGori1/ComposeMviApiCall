@@ -10,10 +10,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.meet.composemviapicall.data.model.Meals
+import com.meet.composemviapicall.data.model.Photos
 
 @Composable
 fun SuccessComponent(
-    data: List<Meals>,
+    data: List<Photos>,
     modifier: Modifier = Modifier,
     onSearchClick: (String) -> Unit
 ) {

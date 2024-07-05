@@ -1,6 +1,7 @@
 package com.meet.composemviapicall.domain.api
 
 import com.meet.composemviapicall.data.model.MealResponse
+import com.meet.composemviapicall.data.model.PhotosList
 import com.meet.composemviapicall.domain.client.KtorClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
@@ -16,6 +17,11 @@ class ApiService {
 
     suspend fun getMealsBySearch(query: String): MealResponse {
         val response: HttpResponse = ktorClient.get("${HttpRoutes.MEALS_BY_SEARCH}?s=$query")
+        return response.body()
+    }
+
+    suspend fun getPhotos(): PhotosList{
+        val response: HttpResponse = ktorClient.get(HttpRoutes.GET_PHOTOS)
         return response.body()
     }
 }

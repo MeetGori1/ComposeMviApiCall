@@ -31,7 +31,7 @@ object KtorClient {
         }
 
         defaultRequest {
-            url("https://www.themealdb.com/api/json/v1/1/")
+            url("https://api.unsplash.com/")
         }
 
         install(Logging) {
