@@ -22,7 +22,7 @@ class ApiService {
                         url {
                             path(HttpRoutes.GET_PHOTOS)
                             parameters.append("page", page.toString())
-                            parameters.append("per_page", "10")
+                            parameters.append("per_page", params.loadSize.toString())
                         }
                     }
                     val photos = response.body<List<Photos>>()

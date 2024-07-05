@@ -12,14 +12,14 @@ object PhotosRepository {
 
     fun getPhotos(): Flow<PagingData<Photos>> {
         return Pager(
-            config = PagingConfig(pageSize = 20),
+            config = PagingConfig(pageSize = 2),
             pagingSourceFactory = { apiService.getPhotos() }
         ).flow
     }
 
     fun getSearchedPhotos(query: String): Flow<PagingData<Photos>> {
         return Pager(
-            config = PagingConfig(pageSize = 10),
+            config = PagingConfig(pageSize = 2),
             pagingSourceFactory = { apiService.getSearchedPhotos(query) }
         ).flow
     }
