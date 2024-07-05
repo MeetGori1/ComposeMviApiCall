@@ -16,6 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
@@ -23,7 +24,6 @@ import com.meet.composemviapicall.data.model.Photos
 
 @Composable
 fun ListPhotos(lazyPagingItems: LazyPagingItems<Photos>, modifier: Modifier = Modifier) {
-
     LazyColumn(modifier = modifier.fillMaxSize()) {
         items(lazyPagingItems.itemCount) { index ->
             val photo = lazyPagingItems[index]
@@ -31,8 +31,43 @@ fun ListPhotos(lazyPagingItems: LazyPagingItems<Photos>, modifier: Modifier = Mo
                 PhotoItem(item = photo)
             }
         }
+
+        lazyPagingItems.apply {
+            when {
+                loadState.refresh is LoadState.Loading -> {
+                    item { LoadingComponent(modifier = Modifier.fillParentMaxSize()) }
+                }
+
+                loadState.append is LoadState.Loading -> {
+                    item { LoadingComponent(modifier = Modifier.fillMaxWidth()) }
+                }
+
+                loadState.refresh is LoadState.Error -> {
+                    val errorState = lazyPagingItems.loadState.refresh as LoadState.Error
+                    item {
+                        ErrorComponent(
+                            message = errorState.error.localizedMessage ?: "An error occurred",
+                            modifier = Modifier.fillParentMaxSize(),
+                            onRetry = { retry() }
+                        )
+                    }
+                }
+
+                loadState.append is LoadState.Error -> {
+                    val errorState = lazyPagingItems.loadState.append as LoadState.Error
+                    item {
+                        ErrorComponent(
+                            message = errorState.error.localizedMessage ?: "An error occurred",
+                            modifier = Modifier.fillMaxWidth(),
+                            onRetry = { retry() }
+                        )
+                    }
+                }
+            }
+        }
     }
 }
+
 
 @Composable
 fun PhotoItem(item: Photos, modifier: Modifier = Modifier) {
