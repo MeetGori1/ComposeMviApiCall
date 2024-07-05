@@ -8,6 +8,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.meet.composemviapicall.presentation.components.ErrorComponent
 import com.meet.composemviapicall.presentation.components.LoadingComponent
 import com.meet.composemviapicall.presentation.components.SuccessComponent
+import com.meet.composemviapicall.presentation.components.shimmer.ShimmerListItem
 import com.meet.composemviapicall.presentation.viewmodel.PhotoIntent
 import com.meet.composemviapicall.presentation.viewmodel.PhotosState
 import com.meet.composemviapicall.presentation.viewmodel.PhotosViewModel
@@ -18,20 +19,27 @@ fun HomeScreen(recipeViewModel: PhotosViewModel, modifier: Modifier = Modifier) 
         recipeViewModel.processIntent(PhotoIntent.GetRandomPhotos)
     }
 
-    when (val state = recipeViewModel.state.collectAsState().value) {
-        is PhotosState.Loading -> LoadingComponent(modifier)
+    val state = recipeViewModel.state.collectAsState().value
 
-        is PhotosState.Error -> {
-            ErrorComponent(message = state.message, modifier,onRetry = {
-                recipeViewModel.processIntent(PhotoIntent.GetRandomPhotos)
-            })
+    ShimmerListItem(isLoading = state is PhotosState.Loading, modifier = modifier) {
+        when (state) {
+            is PhotosState.Error -> {
+                ErrorComponent(
+                    message = state.message,
+                    modifier = modifier,
+                    onRetry = { recipeViewModel.processIntent(PhotoIntent.GetRandomPhotos) }
+                )
+            }
+            is PhotosState.Success -> {
+                SuccessComponent(
+                    state.data.collectAsLazyPagingItems(),
+                    modifier = modifier,
+                    onSearchClick = { query ->
+                        recipeViewModel.processIntent(PhotoIntent.GetSearchedPhotos(query = query))
+                    }
+                )
+            }
+            else -> {} // Handle the else case if needed, or remove it
         }
-
-        is PhotosState.Success -> {
-            SuccessComponent(state.data.collectAsLazyPagingItems(), modifier = modifier, onSearchClick = { query ->
-                recipeViewModel.processIntent(PhotoIntent.GetSearchedPhotos(query = query))
-            })
-        }
-
     }
 }

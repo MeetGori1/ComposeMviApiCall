@@ -34,9 +34,9 @@ fun ListPhotos(lazyPagingItems: LazyPagingItems<Photos>, modifier: Modifier = Mo
 
         lazyPagingItems.apply {
             when {
-                loadState.refresh is LoadState.Loading -> {
+             /*   loadState.refresh is LoadState.Loading -> {
                     item { LoadingComponent(modifier = Modifier.fillParentMaxSize()) }
-                }
+                }*/
 
                 loadState.append is LoadState.Loading -> {
                     item { LoadingComponent(modifier = Modifier.fillMaxWidth()) }
