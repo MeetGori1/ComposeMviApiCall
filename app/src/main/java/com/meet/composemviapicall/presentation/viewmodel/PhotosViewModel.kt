@@ -2,10 +2,11 @@ package com.meet.composemviapicall.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
-import com.meet.composemviapicall.data.model.Photos
-import com.meet.composemviapicall.domain.repository.PhotosRepository
-import kotlinx.coroutines.flow.Flow
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.cachedIn
+import com.meet.composemviapicall.domain.api.HttpRoutes
+import com.meet.composemviapicall.presentation.pagingdatasource.PagingDataSource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -14,20 +15,43 @@ class PhotosViewModel : ViewModel() {
     private val _state = MutableStateFlow<PhotosState>(PhotosState.Loading)
     val state: StateFlow<PhotosState> = _state
 
-    private var currentQuery: String? = null
-    val photos: Flow<PagingData<Photos>> = currentQuery?.let {
-        PhotosRepository.getSearchedPhotos(it)
-    } ?: PhotosRepository.getPhotos()
-
-    fun processIntent(intent: Intents) {
-        when (intent) {
-            is Intents.GetRandomPhotos -> {
-                currentQuery = null
-                _state.value = PhotosState.Loading
+    fun processIntent(intent: PhotoIntent) {
+        viewModelScope.launch {
+            when (intent) {
+                is PhotoIntent.GetRandomPhotos -> {
+                    getPhotos()
+                }
+                is PhotoIntent.GetSearchedPhotos -> {
+                    searchPhotos(intent.query)
+                }
             }
-            is Intents.GetSearchedPhotos -> {
-                currentQuery = intent.query
-                _state.value = PhotosState.Loading
+        }
+    }
+
+    private fun getPhotos() {
+        viewModelScope.launch {
+            _state.value = PhotosState.Loading
+            try {
+                val photos = Pager(PagingConfig(pageSize = 2)) {
+                    PagingDataSource(HttpRoutes.GET_PHOTOS)
+                }.flow.cachedIn(viewModelScope)
+                _state.value = PhotosState.Success(photos)
+            } catch (e: Exception) {
+                _state.value = PhotosState.Error("Error fetching photos: ${e.message}")
+            }
+        }
+    }
+
+    private fun searchPhotos(query: String){
+        viewModelScope.launch {
+            _state.value = PhotosState.Loading
+            try {
+                val photos = Pager(PagingConfig(pageSize = 2)) {
+                    PagingDataSource(HttpRoutes.SEARCH_PHOTOS,query=query)
+                }.flow.cachedIn(viewModelScope)
+                _state.value = PhotosState.Success(photos)
+            } catch (e: Exception) {
+                _state.value = PhotosState.Error("Error fetching photos: ${e.message}")
             }
         }
     }
