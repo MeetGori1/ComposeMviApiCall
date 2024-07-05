@@ -9,11 +9,12 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.paging.compose.LazyPagingItems
 import com.meet.composemviapicall.data.model.Photos
 
 @Composable
 fun SuccessComponent(
-    data: List<Photos>,
+    lazyPagingItems: LazyPagingItems<Photos>,
     modifier: Modifier = Modifier,
     onSearchClick: (String) -> Unit
 ) {
@@ -26,6 +27,6 @@ fun SuccessComponent(
             modifier = modifier.padding(horizontal = 15.dp)
         )
         SearchComponent(onSearchClick = onSearchClick)
-        ListPhotos(data = data)
+        ListPhotos(lazyPagingItems=lazyPagingItems)
     }
 }

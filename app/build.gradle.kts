@@ -75,4 +75,8 @@ dependencies {
     implementation(libs.ktor.client.logging)
     implementation(libs.gson)
     implementation(libs.coil.compose)
+
+    //paging 3
+    implementation(libs.androidx.paging.runtime.ktx)
+    implementation(libs.androidx.paging.compose)
 }

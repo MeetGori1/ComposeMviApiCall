@@ -20,25 +20,26 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import androidx.paging.compose.LazyPagingItems
 import coil.compose.AsyncImage
 import coil.compose.rememberImagePainter
 import com.meet.composemviapicall.data.model.Photos
 
 @Composable
-fun ListPhotos(data: List<Photos>, modifier: Modifier = Modifier) {
+fun ListPhotos(lazyPagingItems: LazyPagingItems<Photos>, modifier: Modifier = Modifier) {
 
     LazyColumn(modifier = modifier.fillMaxSize()) {
-        items(data.size) { index ->
-            val meal = data[index]
-            PhotoItem(item = meal)
-
+        items(lazyPagingItems.itemCount) { index ->
+            val photo = lazyPagingItems[index]
+            if (photo != null) {
+                PhotoItem(item = photo)
+            }
         }
     }
 }
 
 @Composable
 fun PhotoItem(item: Photos, modifier: Modifier = Modifier) {
-    var expanded by remember { mutableStateOf(false) }
     Card(
         modifier = modifier
             .fillMaxWidth()

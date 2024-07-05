@@ -2,7 +2,10 @@ package com.meet.composemviapicall.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import com.meet.composemviapicall.data.model.Photos
 import com.meet.composemviapicall.domain.repository.PhotosRepository
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -11,33 +14,20 @@ class PhotosViewModel : ViewModel() {
     private val _state = MutableStateFlow<PhotosState>(PhotosState.Loading)
     val state: StateFlow<PhotosState> = _state
 
+    private var currentQuery: String? = null
+    val photos: Flow<PagingData<Photos>> = currentQuery?.let {
+        PhotosRepository.getSearchedPhotos(it)
+    } ?: PhotosRepository.getPhotos()
+
     fun processIntent(intent: Intents) {
         when (intent) {
-            is Intents.GetRandomPhotos -> getRandomPhotos()
-            is Intents.GetSearchedPhotos -> getSearchedPhotos(intent.query)
-        }
-    }
-
-    private fun getRandomPhotos() {
-        viewModelScope.launch {
-            _state.value = PhotosState.Loading
-            try {
-                val meals = PhotosRepository.getPhotos()
-                _state.value = PhotosState.Success(meals)
-            } catch (e: Exception) {
-                _state.value = PhotosState.Error(e.message.toString())
+            is Intents.GetRandomPhotos -> {
+                currentQuery = null
+                _state.value = PhotosState.Loading
             }
-        }
-    }
-
-    private fun getSearchedPhotos(query: String) {
-        viewModelScope.launch {
-            _state.value = PhotosState.Loading
-            try {
-                val meals = PhotosRepository.getSearchedPhotos(query = query)
-                _state.value = PhotosState.Success(meals)
-            } catch (e: Exception) {
-                _state.value = PhotosState.Error(e.message.toString())
+            is Intents.GetSearchedPhotos -> {
+                currentQuery = intent.query
+                _state.value = PhotosState.Loading
             }
         }
     }
