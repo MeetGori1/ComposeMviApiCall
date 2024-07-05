@@ -1,6 +1,5 @@
 package com.meet.composemviapicall.presentation.screens
 
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -9,33 +8,33 @@ import com.meet.composemviapicall.presentation.components.ErrorComponent
 import com.meet.composemviapicall.presentation.components.LoadingComponent
 import com.meet.composemviapicall.presentation.components.SuccessComponent
 import com.meet.composemviapicall.presentation.viewmodel.Intents
-import com.meet.composemviapicall.presentation.viewmodel.RecipeState
-import com.meet.composemviapicall.presentation.viewmodel.RecipeViewModel
+import com.meet.composemviapicall.presentation.viewmodel.PhotosState
+import com.meet.composemviapicall.presentation.viewmodel.PhotosViewModel
 
 @Composable
-fun HomeScreen(recipeViewModel: RecipeViewModel, modifier: Modifier = Modifier) {
+fun HomeScreen(recipeViewModel: PhotosViewModel, modifier: Modifier = Modifier) {
     when (val state = recipeViewModel.state.collectAsState().value) {
-        is RecipeState.Loading -> LoadingComponent(modifier)
+        is PhotosState.Loading -> LoadingComponent(modifier)
 
-        is RecipeState.Error -> {
+        is PhotosState.Error -> {
             ErrorComponent(message = state.message, modifier,onRetry = {
-                recipeViewModel.processIntent(Intents.GetRandomMeals)
+                recipeViewModel.processIntent(Intents.GetRandomPhotos)
             })
         }
 
-        is RecipeState.Success -> {
-            val recipeList = state.meals
+        is PhotosState.Success -> {
+            val recipeList = state.photos
             SuccessComponent(recipeList,modifier=modifier ,onSearchClick = {query->
                 run {
-                 /*   recipeViewModel.processIntent(
-                        Intents.GetSearchMeals()
-                    )*/
+                   recipeViewModel.processIntent(
+                        Intents.GetSearchedPhotos(query=query)
+                    )
                 }
             })
         }
 
     }
     LaunchedEffect(key1 = true) {
-        recipeViewModel.processIntent(Intents.GetRandomMeals)
+        recipeViewModel.processIntent(Intents.GetRandomPhotos)
     }
 }

@@ -11,10 +11,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import com.meet.composemviapicall.presentation.screens.HomeScreen
 import com.meet.composemviapicall.ui.theme.ComposeMviApiCallTheme
-import com.meet.composemviapicall.presentation.viewmodel.RecipeViewModel
+import com.meet.composemviapicall.presentation.viewmodel.PhotosViewModel
 
 class MainActivity : ComponentActivity() {
-    private val viewModel: RecipeViewModel by viewModels()
+    private val viewModel: PhotosViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 data class PhotosList(
     @SerializedName("total") var total: Int? = null,
     @SerializedName("total_pages") var totalPages: Int? = null,
-    @SerializedName("results") var data: ArrayList<Photos> = arrayListOf()
+    @SerializedName("results") var data: List<Photos> = arrayListOf()
 )
 
 @Serializable

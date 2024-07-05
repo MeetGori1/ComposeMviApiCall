@@ -9,7 +9,6 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.meet.composemviapicall.data.model.Meals
 import com.meet.composemviapicall.data.model.Photos
 
 @Composable
@@ -27,6 +26,6 @@ fun SuccessComponent(
             modifier = modifier.padding(horizontal = 15.dp)
         )
         SearchComponent(onSearchClick = onSearchClick)
-        ListMeals(data = data)
+        ListPhotos(data = data)
     }
 }
