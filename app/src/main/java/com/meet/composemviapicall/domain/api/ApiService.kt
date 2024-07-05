@@ -12,7 +12,13 @@ class ApiService {
     private val ktorClient = KtorClient.client
 
     suspend fun getPhotos(): List<Photos>{
-        val response: HttpResponse = ktorClient.get(HttpRoutes.GET_PHOTOS)
+        val response: HttpResponse = ktorClient.get {
+            url {
+                path(HttpRoutes.GET_PHOTOS)
+                parameters.append("page", "1")
+                parameters.append("per_page", "20")
+            }
+        }
         return response.body()
     }
 
