@@ -46,7 +46,7 @@ fun ListPhotos(lazyPagingItems: LazyPagingItems<Photos>, modifier: Modifier = Mo
                     val errorState = lazyPagingItems.loadState.refresh as LoadState.Error
                     item {
                         ErrorComponent(
-                            message = errorState.error.localizedMessage ?: "An error occurred",
+                            message = errorState.error.message ?: "An error occurred",
                             modifier = Modifier.fillParentMaxSize(),
                             onRetry = { retry() }
                         )
@@ -57,7 +57,7 @@ fun ListPhotos(lazyPagingItems: LazyPagingItems<Photos>, modifier: Modifier = Mo
                     val errorState = lazyPagingItems.loadState.append as LoadState.Error
                     item {
                         ErrorComponent(
-                            message = errorState.error.localizedMessage ?: "An error occurred",
+                            message = errorState.error.message ?: "An error occurred",
                             modifier = Modifier.fillMaxWidth(),
                             onRetry = { retry() }
                         )

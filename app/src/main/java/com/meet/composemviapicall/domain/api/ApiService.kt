@@ -1,7 +1,7 @@
 package com.meet.composemviapicall.domain.api
 
+import com.meet.composemviapicall.data.base.BaseModel
 import com.meet.composemviapicall.data.model.Photos
-import com.meet.composemviapicall.data.model.PhotosList
 import com.meet.composemviapicall.domain.client.KtorClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
@@ -11,7 +11,7 @@ import io.ktor.http.path
 class ApiService {
     private val ktorClient = KtorClient.client
 
-    suspend fun getPhotos(page: Int = 1, perPage: Int = 20): List<Photos>{
+    suspend fun getPhotos(page: Int = 1, perPage: Int = 20): List<Photos> {
         val response: HttpResponse = ktorClient.get {
             url {
                 path(HttpRoutes.GET_PHOTOS)
@@ -22,7 +22,7 @@ class ApiService {
         return response.body()
     }
 
-    suspend fun getSearchedPhotos(query: String,page: Int, perPage: Int): PhotosList{
+    suspend fun getSearchedPhotos(query: String,page: Int, perPage: Int): BaseModel {
         val response: HttpResponse = ktorClient.get {
             url {
                 path(HttpRoutes.SEARCH_PHOTOS)

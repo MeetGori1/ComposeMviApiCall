@@ -32,7 +32,7 @@ class PhotosViewModel : ViewModel() {
         viewModelScope.launch {
             _state.value = PhotosState.Loading
             try {
-                val photos = Pager(PagingConfig(pageSize = 2)) {
+                val photos = Pager(PagingConfig(pageSize = 8)) {
                     PagingDataSource(HttpRoutes.GET_PHOTOS)
                 }.flow.cachedIn(viewModelScope)
                 _state.value = PhotosState.Success(photos)
@@ -46,7 +46,7 @@ class PhotosViewModel : ViewModel() {
         viewModelScope.launch {
             _state.value = PhotosState.Loading
             try {
-                val photos = Pager(PagingConfig(pageSize = 2)) {
+                val photos = Pager(PagingConfig(pageSize = 8)) {
                     PagingDataSource(HttpRoutes.SEARCH_PHOTOS,query=query)
                 }.flow.cachedIn(viewModelScope)
                 _state.value = PhotosState.Success(photos)

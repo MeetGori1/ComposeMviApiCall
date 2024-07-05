@@ -4,13 +4,6 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PhotosList(
-    @SerializedName("total") var total: Int? = null,
-    @SerializedName("total_pages") var totalPages: Int? = null,
-    @SerializedName("results") var data: List<Photos> = arrayListOf()
-)
-
-@Serializable
 data class Photos(
     @SerializedName("id") var id: String? = null,
     @SerializedName("created_at") var createdAt: String? = null,

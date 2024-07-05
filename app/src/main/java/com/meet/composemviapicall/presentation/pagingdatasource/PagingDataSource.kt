@@ -1,10 +1,14 @@
 package com.meet.composemviapicall.presentation.pagingdatasource
 
+import android.annotation.SuppressLint
+import android.net.http.HttpException
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.meet.composemviapicall.data.model.Photos
 import com.meet.composemviapicall.domain.api.HttpRoutes
 import com.meet.composemviapicall.domain.repository.PhotosRepository
+import org.json.JSONException
+import java.io.IOException
 
 class PagingDataSource(private val endPoint: String, private val query: String? = null) :
     PagingSource<Int, Photos>() {
@@ -16,6 +20,7 @@ class PagingDataSource(private val endPoint: String, private val query: String? 
         }
     }
 
+    @SuppressLint("NewApi")
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Photos> {
         val page = params.key ?: 1
         try {
@@ -25,18 +30,31 @@ class PagingDataSource(private val endPoint: String, private val query: String? 
                 }
 
                 HttpRoutes.SEARCH_PHOTOS -> {
-                    PhotosRepository.getSearchedPhotos(page, params.loadSize, query ?: "")
+                    PhotosRepository.getSearchedPhotos(page, params.loadSize, query ?: "").results
                 }
 
-                else -> emptyList()
+                else -> null
             }
 
             return LoadResult.Page(
-                data = photos,
+                data = photos ?: mutableListOf(),
                 prevKey = if (page == 1) null else page - 1,
-                nextKey = if (photos.isEmpty()) null else page + 1
+                nextKey = if (photos.isNullOrEmpty()) null else page + 1
             )
+        } catch (exception: IOException) {
+            exception.printStackTrace()
+            return LoadResult.Error(exception)
+        } catch (httpException: HttpException) {
+            httpException.printStackTrace()
+            return LoadResult.Error(httpException)
+        }catch (e: NullPointerException){
+            e.printStackTrace()
+            return LoadResult.Error(e)
+        }catch (e: JSONException){
+            e.printStackTrace()
+            return LoadResult.Error(e)
         } catch (e: Exception) {
+            e.printStackTrace()
             return LoadResult.Error(e)
         }
     }
